@@ -1,0 +1,5 @@
+TaxCalc.UnitTests/bin/
+TaxCalc/obj/TaxCalc.csproj.nuget.dgspec.json
+TaxCalc/obj/
+TaxCalc.UnitTests/obj/
+TaxCalc/bin/
