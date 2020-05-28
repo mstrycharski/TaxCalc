@@ -17,5 +17,7 @@ namespace TaxCalc
 
         public double? Threshold { get; }
         public int Rate { get; }
+
+        public static double? LastThreshold => null;
     }
 }

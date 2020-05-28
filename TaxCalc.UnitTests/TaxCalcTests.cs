@@ -31,7 +31,7 @@ namespace TaxCalc.UnitTests
                 TaxCalc.CalculateTax(income,
                     new TaxRate(new TaxRateItem(10000, 0),
                         new TaxRateItem(50000, 10),
-                        new TaxRateItem(null, 30))));
+                        new TaxRateItem(TaxRateItem.LastThreshold, 30))));
         }
 
         [Theory]
@@ -58,7 +58,7 @@ namespace TaxCalc.UnitTests
         public void WhenTaxRateIsAlwaysZero_ReturnsZero(int income)
         {
             Assert.Equal(0,
-                TaxCalc.CalculateTax(income, new TaxRate(new TaxRateItem(null, 0))));
+                TaxCalc.CalculateTax(income, new TaxRate(new TaxRateItem(TaxRateItem.LastThreshold, 0))));
         }
 
         [Theory]
@@ -70,7 +70,7 @@ namespace TaxCalc.UnitTests
         {
             Assert.Equal(income,
                 TaxCalc.CalculateTax(income,
-                    new TaxRate(new TaxRateItem(null, 100))));
+                    new TaxRate(new TaxRateItem(TaxRateItem.LastThreshold, 100))));
         }
     }
 }
