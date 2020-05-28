@@ -12,23 +12,23 @@ namespace TaxCalc
             if (income < 0)
                 throw new ArgumentException($"{nameof(income)} has to be greater than zero");
 
-            double calculatedTax = 0;
+            //double calculatedTax = 0;
             double alreadyTaxedIncome = 0;
 
-            return taxRate.TaxRateItems.Aggregate(0.0, (x, y) =>
+            return taxRate.TaxRateItems.Aggregate(0.0, (alreadyCalculatedTax, currentTaxRate) =>
             {
                 if (alreadyTaxedIncome >= income)
-                    return x;
+                    return alreadyCalculatedTax;
 
-                var amountOfMoneyForCurrentTaxRate = (y.Threshold ?? income) - alreadyTaxedIncome;
+                var amountOfMoneyForCurrentTaxRate = (currentTaxRate.Threshold ?? income) - alreadyTaxedIncome;
 
-                var amountOdMoneyToBeTaxedByCurrentRate =
+                var amountOfMoneyToBeTaxedByCurrentRate =
                     Math.Min(amountOfMoneyForCurrentTaxRate, income - alreadyTaxedIncome);
 
-                alreadyTaxedIncome += amountOfMoneyForCurrentTaxRate;
-                x += amountOdMoneyToBeTaxedByCurrentRate * y.Rate / 100;
+                alreadyTaxedIncome += amountOfMoneyToBeTaxedByCurrentRate;
+                alreadyCalculatedTax += amountOfMoneyToBeTaxedByCurrentRate * currentTaxRate.Rate / 100;
 
-                return x;
+                return alreadyCalculatedTax;
             });
 
             //foreach (var taxRateItem in taxRate.TaxRateItems)
