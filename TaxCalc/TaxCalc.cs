@@ -15,19 +15,35 @@ namespace TaxCalc
             double calculatedTax = 0;
             double alreadyTaxedIncome = 0;
 
-            foreach (var taxRateItem in taxRate.TaxRateItems)
+            return taxRate.TaxRateItems.Aggregate(0.0, (x, y) =>
             {
                 if (alreadyTaxedIncome >= income)
-                    break;
+                    return x;
 
-                var amountOfMoneyForCurrentTaxRate = (taxRateItem.Threshold ?? income) - alreadyTaxedIncome;
+                var amountOfMoneyForCurrentTaxRate = (y.Threshold ?? income) - alreadyTaxedIncome;
 
-                calculatedTax += Math.Min(amountOfMoneyForCurrentTaxRate, income - alreadyTaxedIncome) *
-                                 taxRateItem.Rate / 100;
+                var amountOdMoneyToBeTaxedByCurrentRate =
+                    Math.Min(amountOfMoneyForCurrentTaxRate, income - alreadyTaxedIncome);
+
                 alreadyTaxedIncome += amountOfMoneyForCurrentTaxRate;
-            }
+                x += amountOdMoneyToBeTaxedByCurrentRate * y.Rate / 100;
 
-            return calculatedTax;
+                return x;
+            });
+
+            //foreach (var taxRateItem in taxRate.TaxRateItems)
+            //{
+            //    if (alreadyTaxedIncome >= income)
+            //        break;
+
+            //    var amountOfMoneyForCurrentTaxRate = (taxRateItem.Threshold ?? income) - alreadyTaxedIncome;
+
+            //    calculatedTax += Math.Min(amountOfMoneyForCurrentTaxRate, income - alreadyTaxedIncome) *
+            //                     taxRateItem.Rate / 100;
+            //    alreadyTaxedIncome += amountOfMoneyForCurrentTaxRate;
+            //}
+
+            //return calculatedTax;
         }
     }
 }

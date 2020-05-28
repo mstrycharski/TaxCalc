@@ -6,9 +6,10 @@ namespace TaxCalc.UnitTests
     public class TaxCalcTests
     {
         [Fact]
-        public void WhenIncomeIsLessOrEqualToZero_ArgumentExceptionExpected()
+        public void WhenIncomeIsLessThenZero_ArgumentExceptionExpected()
         {
-            Assert.Throws<ArgumentException>(() => TaxCalc.CalculateTax(-1, new TaxRate()));
+            Assert.Throws<ArgumentException>(() => TaxCalc.CalculateTax(-1,
+                new TaxRate(new TaxRateItem(100, 10))));
         }
 
         [Fact]

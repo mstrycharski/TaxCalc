@@ -17,7 +17,7 @@ namespace TaxCalc
                 throw new ArgumentException($"{nameof(taxRateItems)} contains duplicates");
             }
 
-            TaxRateItems = taxRateItems.ToList().AsReadOnly();
+            TaxRateItems = taxRateItems.OrderBy(x => x.Threshold ?? double.MaxValue).ToList().AsReadOnly();
         }
 
         public IReadOnlyCollection<TaxRateItem> TaxRateItems { get; }
